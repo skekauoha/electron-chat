@@ -1,9 +1,11 @@
-const { app, BrowserWindow } = require("electron");
+// Main Process
+const { app, BrowserWindow, Notification } = require("electron");
 
 function createWindow() {
+  // Browser Window <- Renderer Process
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     backgroundColor: "white",
     webPreferences: {
       nodeIntegration: true,
@@ -11,6 +13,27 @@ function createWindow() {
   });
 
   win.loadFile("index.html");
+  win.webContents.openDevTools();
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow();
+  const notification = new Notification({
+    title: "Hello World!",
+    body: "My Test Message",
+  });
+  notification.show();
+});
+
+app.on("window-all-closed", () => {
+  // if not mac
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+});
+
+app.on("activate", () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
+});
