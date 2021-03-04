@@ -4,6 +4,7 @@
     },
     "editor.formatOnSave": true,
     "javascript.format.enable": false,
-    "prettier.eslint": true
+    "prettier.eslint": true,
+    "prettier.singleQuote": true
   }
   
