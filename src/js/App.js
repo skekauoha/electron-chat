@@ -3,6 +3,10 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 import HomeView from './views/Home';
 import Navbar from './components/Navbar';
+import Login from './views/Login';
+import Register from './views/Register';
+import Settings from './views/Settings';
+import Chat from './views/Chat';
 
 const App = () => {
   return (
@@ -10,17 +14,20 @@ const App = () => {
       <Navbar />
       <div className="content-wrapper">
         <Switch>
+          <Route path="/" exact>
+            <HomeView />
+          </Route>
+          <Route path="/chat">
+            <Chat />
+          </Route>
           <Route path="/settings">
-            <h1>Settings</h1>
+            <Settings />
           </Route>
           <Route path="/login">
-            <h1>login</h1>
+            <Login />
           </Route>
           <Route path="/register">
-            <h1>register</h1>
-          </Route>
-          <Route path="/">
-            <HomeView />
+            <Register />
           </Route>
         </Switch>
       </div>
