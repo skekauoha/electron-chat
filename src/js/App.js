@@ -17,7 +17,7 @@ const App = () => {
           <Route path="/" exact>
             <HomeView />
           </Route>
-          <Route path="/chat">
+          <Route path="/chat/:id">
             <Chat />
           </Route>
           <Route path="/settings">
