@@ -6,9 +6,11 @@ const firebaseDB = async (collection) => {
   return api;
 };
 
+const extractSnapshot = (doc) => ({ id: doc.id, ...doc.data() });
+
 export const fetchChats = async () => {
   const api = await firebaseDB('chats');
-  const data = api.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  const data = api.docs.map(extractSnapshot);
 
   return data;
 };
