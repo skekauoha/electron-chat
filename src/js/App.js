@@ -5,8 +5,7 @@ import configureStore from '../store/index';
 
 import HomeView from './views/Home';
 import Navbar from './components/Navbar';
-import Login from './views/Login';
-import Register from './views/Register';
+import Welcome from './views/Welcome';
 import Settings from './views/Settings';
 import Chat from './views/Chat';
 
@@ -20,6 +19,9 @@ const App = () => {
         <div className="content-wrapper">
           <Switch>
             <Route path="/" exact>
+              <Welcome />
+            </Route>
+            <Route path="/home">
               <HomeView />
             </Route>
             <Route path="/chat/:id">
@@ -27,12 +29,6 @@ const App = () => {
             </Route>
             <Route path="/settings">
               <Settings />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
             </Route>
           </Switch>
         </div>
