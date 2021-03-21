@@ -7,6 +7,11 @@ export const registerUser = (formData) => async (dispatch) => {
   });
 };
 
+export const login = (formData) => async (dispatch) => {
+  await api.login(formData);
+  dispatch({ type: 'AUTH_LOGIN_SUCCESS' });
+};
+
 export const logout = () => async (dispatch) => {
   await api.logout();
   dispatch({ type: 'AUTH_LOGOUT_SUCCESS' });
