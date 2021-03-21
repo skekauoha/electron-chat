@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from '../store/index';
+import { listenToAuthChanges } from './actions/auth';
 
-import HomeView from './views/Home';
+import Home from './views/Home';
 import Navbar from './components/Navbar';
 import Welcome from './views/Welcome';
 import Settings from './views/Settings';
@@ -12,6 +13,10 @@ import Chat from './views/Chat';
 const store = configureStore();
 
 const App = () => {
+  useEffect(() => {
+    store.dispatch(listenToAuthChanges());
+  }, []);
+
   return (
     <Provider store={store}>
       <Router>
@@ -22,7 +27,7 @@ const App = () => {
               <Welcome />
             </Route>
             <Route path="/home">
-              <HomeView />
+              <Home />
             </Route>
             <Route path="/chat/:id">
               <Chat />
