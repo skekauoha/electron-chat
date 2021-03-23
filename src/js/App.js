@@ -17,6 +17,7 @@ import Chat from './views/Chat';
 import Loader from './components/shared/Loader';
 
 function AuthRoute({ children, ...rest }) {
+  console.log('test');
   const user = useSelector(({ auth }) => auth.user);
   const onlyChild = React.Children.only(children);
 
