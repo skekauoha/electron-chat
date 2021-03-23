@@ -3,15 +3,21 @@ import { useForm } from 'react-hook-form';
 ``;
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../actions/auth';
+import Loader from './shared/Loader';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const error = useSelector(({ auth }) => auth.login.error);
+  const isChecking = useSelector(({ auth }) => auth.login.isChecking);
 
   const onSubmit = (data) => {
     dispatch(login(data));
   };
+
+  if (isChecking) {
+    return <Loader />;
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="centered-container-form">

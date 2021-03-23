@@ -1,45 +1,59 @@
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import configureStore from '../store/index';
+import { useDispatch, useSelector } from 'react-redux';
 import { listenToAuthChanges } from './actions/auth';
+import StoreProvider from '../store/StoreProvider';
 
 import Home from './views/Home';
 import Navbar from './components/Navbar';
 import Welcome from './views/Welcome';
 import Settings from './views/Settings';
 import Chat from './views/Chat';
+import Loader from './components/shared/Loader';
 
-const store = configureStore();
+const ContentWrapper = ({ children }) => (
+  <div className="content-wrapper">{children}</div>
+);
 
-const App = () => {
+function ChatApp() {
+  const dispatch = useDispatch();
+  const isChecking = useSelector(({ auth }) => auth.isChecking);
+
   useEffect(() => {
-    store.dispatch(listenToAuthChanges());
-  }, []);
+    dispatch(listenToAuthChanges());
+  }, [dispatch]);
+
+  if (isChecking) {
+    return <Loader />;
+  }
 
   return (
-    <Provider store={store}>
-      <Router>
-        <Navbar />
-        <div className="content-wrapper">
-          <Switch>
-            <Route path="/" exact>
-              <Welcome />
-            </Route>
-            <Route path="/home">
-              <Home />
-            </Route>
-            <Route path="/chat/:id">
-              <Chat />
-            </Route>
-            <Route path="/settings">
-              <Settings />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    </Provider>
+    <Router>
+      <Navbar />
+      <ContentWrapper>
+        <Switch>
+          <Route path="/" exact>
+            <Welcome />
+          </Route>
+          <Route path="/home">
+            <Home />
+          </Route>
+          <Route path="/chat/:id">
+            <Chat />
+          </Route>
+          <Route path="/settings">
+            <Settings />
+          </Route>
+        </Switch>
+      </ContentWrapper>
+    </Router>
   );
-};
+}
 
-export default App;
+export default function App() {
+  return (
+    <StoreProvider>
+      <ChatApp />
+    </StoreProvider>
+  );
+}
