@@ -10,14 +10,12 @@ import { listenToAuthChanges } from './actions/auth';
 import StoreProvider from '../store/StoreProvider';
 
 import Home from './views/Home';
-import Navbar from './components/Navbar';
 import Welcome from './views/Welcome';
 import Settings from './views/Settings';
 import Chat from './views/Chat';
 import Loader from './components/shared/Loader';
 
 function AuthRoute({ children, ...rest }) {
-  console.log('test');
   const user = useSelector(({ auth }) => auth.user);
   const onlyChild = React.Children.only(children);
 
@@ -53,7 +51,6 @@ function ChatApp() {
 
   return (
     <Router>
-      <Navbar />
       <ContentWrapper>
         <Switch>
           <Route path="/" exact>
